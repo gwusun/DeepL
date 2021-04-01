@@ -23,14 +23,14 @@ JSB.newAddon = function(mainPath){
           Application.sharedInstance().studyController(self.window).view.addSubview(self.webController.view);
           self.layoutWebController();
           Application.sharedInstance().studyController(self.window).refreshAddonCommands();
-          NSTimer.scheduledTimerWithTimeInterval(0.2,false,function(){ 
+          NSTimer.scheduledTimerWithTimeInterval(0.2,false,function(){
             Application.sharedInstance().studyController(self.window).becomeFirstResponder(); //For dismiss keyboard on iOS
           });
         }
       });
     },
     notebookWillClose: function(notebookid) {
-      self.webController.view.removeFromSuperview();  
+      self.webController.view.removeFromSuperview();
       NSNotificationCenter.defaultCenter().removeObserverName(self,'PopupMenuOnNote');
       NSNotificationCenter.defaultCenter().removeObserverName(self,'PopupMenuOnSelection');
     },
@@ -72,10 +72,10 @@ JSB.newAddon = function(mainPath){
         NSUserDefaults.standardUserDefaults().setObjectForKey(false,'marginnote_deel_on');
       }
       else{
-        Application.sharedInstance().studyController(self.window).view.addSubview(self.webController.view);        
+        Application.sharedInstance().studyController(self.window).view.addSubview(self.webController.view);
         self.layoutWebController();
         NSUserDefaults.standardUserDefaults().setObjectForKey(true,'marginnote_deel_on');
-        NSTimer.scheduledTimerWithTimeInterval(0.2,false,function(){ 
+        NSTimer.scheduledTimerWithTimeInterval(0.2,false,function(){
           Application.sharedInstance().studyController(self.window).becomeFirstResponder(); //For dismiss keyboard on iOS
         });
       }
@@ -94,9 +94,11 @@ JSB.newAddon = function(mainPath){
     },
   });
   newAddonClass.prototype.layoutWebController = function(){
+    //set layout
     var frame = Application.sharedInstance().studyController(this.window).view.bounds;
     var width = frame.width > 300?(300 + (frame.width - 300)/2):300;
-    this.webController.view.frame = {x:(frame.width-width)/2,y:frame.height - 300,width:frame.width,height:300};
+    // this.webController.view.frame = {x:(frame.width-width)/2,y:frame.height - 300,width:width,height:300};
+    this.webController.view.frame = {x:0,y:frame.height - 250,width:frame.width,height:250};
   };
   return newAddonClass;
 };
