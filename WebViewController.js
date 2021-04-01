@@ -9,33 +9,36 @@ var WebViewController = JSB.defineClass('WebViewController : UIViewController', 
     var webFrame = self.view.bounds;
 
     self.webView = new UIWebView(webFrame);
-    
+
     self.webView.backgroundColor = UIColor.whiteColor();
     self.webView.scalesPageToFit = true;
+    // self.webView.autoresizingMask = (1 << 1 | 1 << 4);
     self.webView.autoresizingMask = (1 << 1 | 1 << 4);
     self.webView.delegate = self;
     self.webView.scrollView.delegate = self;
-    self.webView.layer.cornerRadius = 15;
+    // self.webView.layer.cornerRadius = 15;
+    self.webView.layer.cornerRadius = 20;
     self.webView.layer.masksToBounds = true;
     self.view.layer.shadowOffset = {width:0,height:0};
-    self.view.layer.shadowRadius = 10;
+    self.view.layer.shadowRadius = 0;
     self.view.layer.shadowOpacity = 0.5;
     self.view.layer.shadowColor = UIColor.colorWithWhiteAlpha(0.5,1);
     self.view.addSubview(self.webView);
-    
+
     self.webView.loadRequest(NSURLRequest.requestWithURL(NSURL.URLWithString('http://www.deepl.com/')));
 
     self.lanButton = UIButton.buttonWithType(0);
-    self.lanButton.frame = {x:webFrame.x + 10,y:webFrame.y + webFrame.height - 50,width:80,height:40};
+    self.lanButton.frame = {x:webFrame.x + 500,y:webFrame.y + webFrame.height - 50,width:80,height:40};
     self.lanButton.autoresizingMask = (1 << 3);
     self.lanButton.setTitleForState('Language',0);
     self.lanButton.setTitleColorForState(Application.sharedInstance().defaultTintColorForDarkBackground,0);
     var highlightColor = UIColor.blendedColor(Application.sharedInstance().defaultTintColorForDarkBackground,Application.sharedInstance().defaultTextColor,0.8);
     self.lanButton.setTitleColorForState(highlightColor,1);
     self.lanButton.backgroundColor = Application.sharedInstance().defaultTextColor.colorWithAlphaComponent(0.6);
-    self.lanButton.layer.cornerRadius = 10;
+    // self.lanButton.layer.cornerRadius = 10;
+    self.lanButton.layer.cornerRadius = 0;
     self.lanButton.layer.masksToBounds = true;
-    self.lanButton.titleLabel.font = UIFont.systemFontOfSize(14);
+    self.lanButton.titleLabel.font = UIFont.systemFontOfSize(10);
     self.lanButton.addTargetActionForControlEvents(self,'changeLanguage:',1<<6);
     self.view.addSubview(self.lanButton);
     self.updateButton();
@@ -85,7 +88,7 @@ var WebViewController = JSB.defineClass('WebViewController : UIViewController', 
 
     //var errorString = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\"><html><head><meta http-equiv='Content-Type' content='text/html;charset=utf-8'><title></title></head><body><div style='width: 100%%; text-align: center; font-size: 36pt; color: red;'>An error occurred:<br>%@</div></body></html>";
     //errorString = errorString.replace("%@", error.localizedDescription);
-    
+
     //self.webView.loadHTMLStringBaseURL(errorString, null);
      if(lan == 'zh')
       Application.sharedInstance().showHUD('网页加载失败，请稍后重试',self.view.window,2);
@@ -154,10 +157,10 @@ WebViewController.prototype.updateOffset = function(){
   this.webView.evaluateJavaScript('document.getElementsByClassName("lmt__side_container--target")[0].getBoundingClientRect().top + document.body.scrollTop+document.documentElement.scrollTop;',function(ret){
     if(!webControlerler.webView)return;
     if(ret && !isNaN(parseFloat(ret))){
-      webControlerler.webView.scrollView.contentOffset = {x:0,y:parseFloat(ret)+0};          
+      webControlerler.webView.scrollView.contentOffset = {x:0,y:parseFloat(ret)+0};
     }
     else{
-      webControlerler.webView.scrollView.contentOffset = {x:0,y:130};          
+      webControlerler.webView.scrollView.contentOffset = {x:0,y:130};
     }
   });
   this.webView.evaluateJavaScript('document.getElementsByClassName("dl_header--sticky")[0].style.display = "none";\
